@@ -9,6 +9,9 @@
           <Dimension value="[139, 33]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+      </AuxValues>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="fileMenu">
           <Properties>
@@ -89,7 +92,7 @@
         <Component class="javax.swing.JTable" name="dbTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="9" rowCount="1">
+              <Table columnCount="9" rowCount="0">
                 <Column editable="true" title="Student_id" type="java.lang.Integer"/>
                 <Column editable="true" title="First name" type="java.lang.String"/>
                 <Column editable="true" title="Last name" type="java.lang.String"/>

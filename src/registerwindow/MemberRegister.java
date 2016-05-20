@@ -11,16 +11,14 @@ public class MemberRegister {
 
     private final String USERNAME = "root";
     private final String PASSWORD = "rene123";
+    private final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/user_information";
 
-    private String connectionString;
     private Connection connection;
     private Statement command;
 
     private SecureRandom securerand;
 
     public MemberRegister(String table, String username, String password) {
-        connectionString = "jdbc:mysql://localhost:3306/user_information";
-
         try {
             securerand = new SecureRandom();
             securerand.nextBytes(new byte[32]);
@@ -33,7 +31,7 @@ public class MemberRegister {
     }
 
     private void addValue(String table, String username, String password) throws SQLException {
-        connection = DriverManager.getConnection(connectionString, USERNAME, PASSWORD);
+        connection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
         command = connection.createStatement();
         command.execute("INSERT INTO " + table + " VALUES ('" + username + "', '" + password + "')");
     }

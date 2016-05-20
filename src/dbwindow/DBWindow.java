@@ -5,17 +5,40 @@
  */
 package dbwindow;
 
+import javax.swing.JMenuItem;
+
 /**
  *
  * @author Troley
  */
 public class DBWindow extends javax.swing.JFrame {
 
-    /**
-     * Creates new form DBWindow
+    /*
+     * Create the JFrame and its components 
      */
     public DBWindow() {
+        setLookAndFeel();
         initComponents();
+    }
+
+    // just the look and feel of the JFrame and its components
+    private void setLookAndFeel() {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DBWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DBWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DBWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DBWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -39,7 +62,7 @@ public class DBWindow extends javax.swing.JFrame {
 
         dbTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Student_id", "First name", "Last name", "Birthdate", "Gender", "Weight", "Length", "BMI", "Time"
@@ -89,13 +112,12 @@ public class DBWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JMenu classMenu;
     javax.swing.JTable dbTable;
     javax.swing.JMenu editMenu;
     javax.swing.JMenu fileMenu;
-    private javax.swing.JMenuBar jMenuBar1;
+    javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

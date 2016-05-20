@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
-import dbwindow.DBWindowMain;
+import dbwindow.DBClassLoader;
 
 public class LoginWindow extends JFrame {
 
@@ -86,7 +86,7 @@ public class LoginWindow extends JFrame {
                             MemberLogin login = new MemberLogin(getUsername(), getPassword());
                             if (login.isAuthenticated()) {
                                 LoginWindow.this.dispose();
-                                new DBWindowMain();
+                                new DBClassLoader();
                             }
                         } catch (SQLException exc) {
                             exc.printStackTrace();

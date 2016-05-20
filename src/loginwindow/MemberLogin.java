@@ -11,19 +11,19 @@ public class MemberLogin {
 
     private final String USERNAME = "root";
     private final String PASSWORD = "rene123";
-
+    private final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/user_information";
+    
     private boolean authenticated;
     private String username;
     private String password;
-    private String connectionString;
     private Connection connection;
     private Statement statement;
+    private static boolean isConnected;
 
     public MemberLogin(String username, String password) throws SQLException {
-        connectionString = "jdbc:mysql://localhost:3306/user_information";
         String query = "SELECT username, password FROM user_information.user_credentials WHERE username = '" + username + "';";
         try {
-            connection = DriverManager.getConnection(connectionString, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
             statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
@@ -41,6 +41,10 @@ public class MemberLogin {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    public static boolean isConnected() {
+        return isConnected;
     }
 
     public boolean isAuthenticated() {
