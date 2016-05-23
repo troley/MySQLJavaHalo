@@ -1,4 +1,4 @@
-package loginwindow;
+package register;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -6,9 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,9 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
-import dbwindow.DBClassLoader;
 
-public class LoginWindow extends JFrame {
+public class RegisterWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,10 +25,10 @@ public class LoginWindow extends JFrame {
     private JPanel userpanel;
     private JTextField username;
     private JPasswordField password;
-    private JButton login;
+    private JButton register;
 
-    public LoginWindow() {
-        super("Login to a database");
+    public RegisterWindow() {
+        super("Register to a database");
         setSize(300, 150);
         setLayout(new GridLayout(3, 1));
         setLocationRelativeTo(null);
@@ -39,21 +36,6 @@ public class LoginWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         componentsInit();
 
-        username.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    login.doClick();
-                }
-            }
-        });
-
-        password.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    login.doClick();
-                }
-            }
-        });
     }
 
     public String getUsername() {
@@ -77,20 +59,12 @@ public class LoginWindow extends JFrame {
         password.setText("Enter password");
         password.addFocusListener(new Hint("Enter password", password));
 
-        login = new JButton("Login");
-        login.addActionListener(new ActionListener() {
+        register = new JButton("Register");
+        register.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (!getUsername().isEmpty() && !getPassword().isEmpty()) {
                     if (!getUsername().equals("Enter username") && !getPassword().equals("Enter password")) {
-                        try {
-                            MemberLogin login = new MemberLogin(getUsername(), getPassword());
-                            if (login.isAuthenticated()) {
-                                LoginWindow.this.dispose();
-                                new DBClassLoader();
-                            }
-                        } catch (SQLException exc) {
-                            exc.printStackTrace();
-                        }
+                        new MemberRegister("user_credentials", getUsername(), getPassword());
                     }
                 }
             }
@@ -104,11 +78,11 @@ public class LoginWindow extends JFrame {
         passpanel.add(password);
         add(userpanel);
         add(passpanel);
-        add(login);
+        add(register);
     }
 
     public static void main(String[] args) {
-        new LoginWindow().setVisible(true);
+        new RegisterWindow().setVisible(true);
     }
 }
 

@@ -1,4 +1,4 @@
-package registerwindow;
+package register;
 
 import hashpassword.BCrypt;
 import java.security.SecureRandom;

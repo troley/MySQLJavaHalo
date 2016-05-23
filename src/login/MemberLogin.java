@@ -1,4 +1,4 @@
-package loginwindow;
+package login;
 
 import hashpassword.BCrypt;
 import java.sql.Connection;
@@ -16,9 +16,8 @@ public class MemberLogin {
     private boolean authenticated;
     private String username;
     private String password;
-    private Connection connection;
+    private static Connection connection;
     private Statement statement;
-    private static boolean isConnected;
 
     public MemberLogin(String username, String password) throws SQLException {
         String query = "SELECT username, password FROM user_information.user_credentials WHERE username = '" + username + "';";
@@ -43,8 +42,8 @@ public class MemberLogin {
         }
     }
     
-    public static boolean isConnected() {
-        return isConnected;
+    public static Connection getConnection() throws SQLException {
+        return connection;
     }
 
     public boolean isAuthenticated() {
