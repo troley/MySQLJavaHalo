@@ -16,7 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
-import database.DBClassLoader;
+import javax.swing.JOptionPane;
+import docenten.DocentMember;
+import onderzoekers.OnderzoekerMember;
 
 public class LoginWindow extends JFrame {
 
@@ -84,9 +86,16 @@ public class LoginWindow extends JFrame {
                     if (!getUsername().equals("Enter username") && !getPassword().equals("Enter password")) {
                         try {
                             MemberLogin login = new MemberLogin(getUsername(), getPassword());
-                            if (login.isAuthenticated()) {
+                            if (login.docentAuthenticated()) {
                                 LoginWindow.this.dispose();
-                                new DBClassLoader();
+                                new DocentMember();
+                            } else if (login.onderzoekerAuthenticated()) {
+                                LoginWindow.this.dispose();
+                                new OnderzoekerMember();
+                            } 
+                            
+                            else {
+                                JOptionPane.showMessageDialog(LoginWindow.this, "Invalid username of password.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         } catch (SQLException exc) {
                             exc.printStackTrace();

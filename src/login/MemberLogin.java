@@ -13,14 +13,17 @@ public class MemberLogin {
     private final String PASSWORD = "rene123";
     private final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/user_information";
     
-    private boolean authenticated;
+    private boolean docentAuthenticated;
+    private boolean onderzoekerAuthenticated;
     private String username;
     private String password;
+    private String is_docent;
+    private String is_onderzoeker;
     private static Connection connection;
     private Statement statement;
 
     public MemberLogin(String username, String password) throws SQLException {
-        String query = "SELECT username, password FROM user_information.user_credentials WHERE username = '" + username + "';";
+        String query = "SELECT username, password, is_docent, is_onderzoeker FROM user_information.user_credentials WHERE username = '" + username + "';";
         try {
             connection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
             statement = connection.createStatement();
@@ -29,11 +32,14 @@ public class MemberLogin {
             while (rs.next()) {
                 this.password = rs.getString("password");
                 this.username = rs.getString("username");
+                this.is_docent = rs.getString("is_docent");
+                this.is_onderzoeker = rs.getString("is_onderzoeker");
 
-                if (BCrypt.checkpw(password, this.password) && this.username.equals(username)) {
-                    System.out.println(password);
-                    System.out.println(this.password);
-                    authenticated = true;
+                if (BCrypt.checkpw(password, this.password) && this.username.equals(username) && this.is_docent.equals("j")) {
+                    docentAuthenticated = true;
+                }
+                else if(BCrypt.checkpw(password, this.password) && this.username.equals(username) && this.is_onderzoeker.equals("j")) {
+                    onderzoekerAuthenticated = true;
                 }
 
             }
@@ -46,7 +52,11 @@ public class MemberLogin {
         return connection;
     }
 
-    public boolean isAuthenticated() {
-        return authenticated;
+    public boolean docentAuthenticated() {
+        return docentAuthenticated;
+    }
+    
+    public boolean onderzoekerAuthenticated() {
+        return onderzoekerAuthenticated;
     }
 }
