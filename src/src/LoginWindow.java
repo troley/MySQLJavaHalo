@@ -1,4 +1,4 @@
-package login;
+package src;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -17,8 +17,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 import javax.swing.JOptionPane;
-import docenten.DocentMember;
-import onderzoekers.OnderzoekerMember;
 
 public class LoginWindow extends JFrame {
 
@@ -56,6 +54,8 @@ public class LoginWindow extends JFrame {
                 }
             }
         });
+
+        this.setVisible(true);
     }
 
     public String getUsername() {
@@ -92,9 +92,7 @@ public class LoginWindow extends JFrame {
                             } else if (login.onderzoekerAuthenticated()) {
                                 LoginWindow.this.dispose();
                                 new OnderzoekerMember();
-                            } 
-                            
-                            else {
+                            } else {
                                 JOptionPane.showMessageDialog(LoginWindow.this, "Invalid username of password.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         } catch (SQLException exc) {
@@ -116,39 +114,35 @@ public class LoginWindow extends JFrame {
         add(login);
     }
 
-    public static void main(String[] args) {
-        new LoginWindow().setVisible(true);
-    }
-}
+    class Hint extends FocusAdapter {
 
-class Hint extends FocusAdapter {
+        private String text;
+        private JTextComponent field;
 
-    private String text;
-    private JTextComponent field;
-
-    public Hint(String text, JTextComponent field) {
-        this.text = text;
-        this.field = field;
-    }
-
-    @Override
-    public void focusGained(FocusEvent arg0) {
-        if (field.getText().equals("Enter username") || field.getText().equals("Enter password")) {
-            if (field instanceof JPasswordField) {
-                ((JPasswordField) field).setEchoChar('*');
-            }
-            field.setText("");
+        public Hint(String text, JTextComponent field) {
+            this.text = text;
+            this.field = field;
         }
-    }
 
-    @Override
-    public void focusLost(FocusEvent arg0) {
-        if (field.getText().isEmpty()) {
-            if (field instanceof JPasswordField) {
-                ((JPasswordField) field).setEchoChar((char) 0);
-                field.setText(text);
-            } else {
-                field.setText(text);
+        @Override
+        public void focusGained(FocusEvent arg0) {
+            if (field.getText().equals("Enter username") || field.getText().equals("Enter password")) {
+                if (field instanceof JPasswordField) {
+                    ((JPasswordField) field).setEchoChar('*');
+                }
+                field.setText("");
+            }
+        }
+
+        @Override
+        public void focusLost(FocusEvent arg0) {
+            if (field.getText().isEmpty()) {
+                if (field instanceof JPasswordField) {
+                    ((JPasswordField) field).setEchoChar((char) 0);
+                    field.setText(text);
+                } else {
+                    field.setText(text);
+                }
             }
         }
     }

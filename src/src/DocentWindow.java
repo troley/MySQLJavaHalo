@@ -3,22 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package database;
+package src;
 
-import javax.swing.JMenuItem;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Troley
  */
-public class DBWindow extends javax.swing.JFrame {
+public class DocentWindow extends javax.swing.JFrame {
 
     DefaultTableModel dtm;
     /*
      * Create the JFrame and its components 
      */
-    public DBWindow() {
+    public DocentWindow() {
         setLookAndFeel();
         initComponents();
         dbTableModel();
@@ -45,13 +44,13 @@ public class DBWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DBWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DocentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DBWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DocentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DBWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DocentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DBWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DocentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
 
@@ -72,7 +71,7 @@ public class DBWindow extends javax.swing.JFrame {
         classMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Class database");
+        setTitle("Docent");
 
         dbTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(dbTable);
@@ -112,7 +111,7 @@ public class DBWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JMenu classMenu;
-    private javax.swing.JTable dbTable;
+    javax.swing.JTable dbTable;
     javax.swing.JMenu editMenu;
     javax.swing.JMenu fileMenu;
     javax.swing.JMenuBar jMenuBar1;

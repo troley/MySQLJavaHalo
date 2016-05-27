@@ -1,18 +1,12 @@
-package register;
+package src;
 
-import hashpassword.BCrypt;
+import src.BCrypt;
 import java.security.SecureRandom;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JCheckBox;
 
 public class MemberRegister {
-
-    private final String USERNAME = "root";
-    private final String PASSWORD = "rene123";
-    private final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/user_information";
 
     private Connection connection;
     private Statement command;
@@ -43,7 +37,7 @@ public class MemberRegister {
     }
 
     private void addValue(String table, String username, String password, char is_docent, char is_onderzoeker) throws SQLException {
-        connection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
+        connection = SQLConnection.getConnection();
         command = connection.createStatement();
         command.execute("INSERT INTO " + table + " VALUES ('" + username + "', '" + password + "', '" + is_docent + "', '" + is_onderzoeker + "')");
     }

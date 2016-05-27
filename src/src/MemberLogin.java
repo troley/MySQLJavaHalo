@@ -1,6 +1,6 @@
-package login;
+package src;
 
-import hashpassword.BCrypt;
+import src.BCrypt;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,10 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class MemberLogin {
-
-    private final String USERNAME = "root";
-    private final String PASSWORD = "rene123";
-    private final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/user_information";
     
     private boolean docentAuthenticated;
     private boolean onderzoekerAuthenticated;
@@ -23,9 +19,9 @@ public class MemberLogin {
     private Statement statement;
 
     public MemberLogin(String username, String password) throws SQLException {
-        String query = "SELECT username, password, is_docent, is_onderzoeker FROM user_information.user_credentials WHERE username = '" + username + "';";
+        String query = "SELECT username, password, is_docent, is_onderzoeker FROM halo.user_credentials WHERE username = '" + username + "';";
         try {
-            connection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
+            connection = SQLConnection.getConnection();
             statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
@@ -46,10 +42,6 @@ public class MemberLogin {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-    
-    public static Connection getConnection() throws SQLException {
-        return connection;
     }
 
     public boolean docentAuthenticated() {

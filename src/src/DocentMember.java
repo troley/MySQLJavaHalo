@@ -1,4 +1,4 @@
-package docenten;
+package src;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +8,6 @@ import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import login.MemberLogin;
 
 public class DocentMember {
 
@@ -31,8 +30,8 @@ public class DocentMember {
 
     private void getConnAndStatement() {
         try {
-            MemberLogin.getConnection();
-            statement = MemberLogin.getConnection().createStatement();
+            SQLConnection.getConnection();
+            statement = SQLConnection.getConnection().createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }

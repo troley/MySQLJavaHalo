@@ -1,4 +1,4 @@
-package onderzoekers;
+package src;
 
 import javax.swing.JFrame;
 
