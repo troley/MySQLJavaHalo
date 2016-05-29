@@ -65,6 +65,7 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
         fileMenu = new javax.swing.JMenu();
         editMenu = new javax.swing.JMenu();
         schoolMenu = new javax.swing.JMenu();
+        loadClassMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +83,10 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
 
         schoolMenu.setText("Load school");
         jMenuBar1.add(schoolMenu);
+
+        loadClassMenu.setText("Load class");
+        loadClassMenu.setOpaque(true);
+        jMenuBar1.add(loadClassMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -146,6 +151,7 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
     javax.swing.JMenu fileMenu;
     javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    javax.swing.JMenu schoolMenu;
+    public javax.swing.JMenu loadClassMenu;
+    public javax.swing.JMenu schoolMenu;
     // End of variables declaration//GEN-END:variables
 }

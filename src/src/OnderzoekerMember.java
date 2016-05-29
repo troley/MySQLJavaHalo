@@ -23,7 +23,8 @@ public class OnderzoekerMember {
         window = new OnderzoekerWindow();
         window.setTitle("Onderzoeker");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        addMenuItemsToMenu();      
+        addMenuItemsToMenu();  
+        window.loadClassMenu.setVisible(false);
         window.setVisible(true);
     }
     
@@ -81,8 +82,62 @@ public class OnderzoekerMember {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            
+            if(!checkIfLoadClassButtonIsVisible()) {
+               setClassNamesInMenuItem();  
+            }
+            else {
+                loadStudents(e);
+            }
 
-            /*
+            
+        }
+        
+        public boolean checkIfLoadClassButtonIsVisible() {
+            if(window.loadClassMenu.isVisible()) {
+                return true;
+            }
+            return false;
+        }
+        
+        public void setClassNamesInMenuItem() {
+            String query = "SELECT class_name FROM class";
+            try {
+                rs = statement.executeQuery(query);
+
+                rs.last(); // set ReultSet object to the last row in the database
+                int size = rs.getRow(); // initialize the last row of the database to the size variable
+                rs.beforeFirst(); // set ResultSet object back to it's initial position
+
+                // initialize jMenuItems array and the (.setText) strings array lengths
+                menuClasses = new JMenuItem[size];
+                menuStrings = new String[size];
+
+                // initialize the arrays
+                int i = 0;
+                while (i < size) {
+                    menuClasses[i] = new JMenuItem();
+                    menuStrings[i] = new String();
+                    i++;
+                }
+
+                // defining the arrays and setting the strings array as text to the jMenuItems array
+                i = 0;
+                while (rs.next()) {
+                    menuStrings[i] = rs.getString("class_name");
+                    menuClasses[i].setText(menuStrings[i]);
+                    menuClasses[i].addActionListener(new ClassChooser(menuClasses[i]));
+                    window.loadClassMenu.add(menuClasses[i]);
+                    i++;
+                }
+                window.loadClassMenu.setVisible(true);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
+        public void loadStudents(ActionEvent e) {
+           /*
              * Selects all students from the student table and checks their foreign keys
              * (class_name) whether they're not null and equal to the selected jMenuItem.
              * We only want to select students from the class we have chosen in the menu.
@@ -118,7 +173,9 @@ public class OnderzoekerMember {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-            }
+            } 
         }
+        
+                   
     }
 }
