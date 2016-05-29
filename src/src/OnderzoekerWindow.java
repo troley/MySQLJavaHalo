@@ -64,7 +64,7 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         editMenu = new javax.swing.JMenu();
-        classMenu = new javax.swing.JMenu();
+        schoolMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,8 +80,8 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
         editMenu.setText("Edit");
         jMenuBar1.add(editMenu);
 
-        classMenu.setText("Load class");
-        jMenuBar1.add(classMenu);
+        schoolMenu.setText("Load school");
+        jMenuBar1.add(schoolMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -141,11 +141,11 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    javax.swing.JMenu classMenu;
     javax.swing.JTable dbTable;
     javax.swing.JMenu editMenu;
     javax.swing.JMenu fileMenu;
     javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    javax.swing.JMenu schoolMenu;
     // End of variables declaration//GEN-END:variables
 }

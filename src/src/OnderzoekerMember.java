@@ -1,13 +1,11 @@
 package src;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 public class OnderzoekerMember {
 
@@ -39,7 +37,7 @@ public class OnderzoekerMember {
     }
 
     private void addMenuItemsToMenu() {
-        String query = "SELECT class_name FROM class";
+        String query = "SELECT schoolName FROM school";
         try {
             rs = statement.executeQuery(query);
 
@@ -62,10 +60,10 @@ public class OnderzoekerMember {
             // defining the arrays and setting the strings array as text to the jMenuItems array
             i = 0;
             while (rs.next()) {
-                menuStrings[i] = rs.getString("class_name");
+                menuStrings[i] = rs.getString("schoolName");
                 menuClasses[i].setText(menuStrings[i]);
                 menuClasses[i].addActionListener(new ClassChooser(menuClasses[i]));
-                window.classMenu.add(menuClasses[i]);
+                window.schoolMenu.add(menuClasses[i]);
                 i++;
             }
         } catch (SQLException e) {
