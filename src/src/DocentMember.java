@@ -7,25 +7,26 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 public class DocentMember {
 
     private Statement statement;
     private ResultSet rs;
-    public DocentWindow window;
+    private DocentWindow docentWindow;
+    private TimeTrackWindow timesWindow;
 
     String[] menuStrings;
-    JMenuItem[] menuClasses;
+    JMenuItem[] loadMenuClasses;
+    JMenuItem[] timesMenuClasses;
 
     // constructor
     public DocentMember() {
         getConnAndStatement();
-        window = new DocentWindow();
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        addMenuItemsToMenu();
+        docentWindow = new DocentWindow();
+        docentWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addItemsToLoadMenus();
         
-        window.setVisible(true);
+        docentWindow.setVisible(true);
     }
 
     private void getConnAndStatement() {
@@ -37,7 +38,7 @@ public class DocentMember {
         }
     }
 
-    private void addMenuItemsToMenu() {
+    private void addItemsToLoadMenus() {
         String query = "SELECT class_name FROM class";
         try {
             rs = statement.executeQuery(query);
@@ -47,13 +48,15 @@ public class DocentMember {
             rs.beforeFirst(); // set ResultSet object back to it's initial position
 
             // initialize jMenuItems array and the (.setText) strings array lengths
-            menuClasses = new JMenuItem[size];
+            loadMenuClasses = new JMenuItem[size];
+            timesMenuClasses = new JMenuItem[size];
             menuStrings = new String[size];
 
             // initialize the arrays
             int i = 0;
             while (i < size) {
-                menuClasses[i] = new JMenuItem();
+                loadMenuClasses[i] = new JMenuItem();
+                timesMenuClasses[i] = new JMenuItem();
                 menuStrings[i] = new String();
                 i++;
             }
@@ -62,21 +65,24 @@ public class DocentMember {
             i = 0;
             while (rs.next()) {
                 menuStrings[i] = rs.getString("class_name");
-                menuClasses[i].setText(menuStrings[i]);
-                menuClasses[i].addActionListener(new ClassChooser(menuClasses[i]));
-                window.classMenu.add(menuClasses[i]);
+                loadMenuClasses[i].setText(menuStrings[i]);
+                timesMenuClasses[i].setText(menuStrings[i]);
+                loadMenuClasses[i].addActionListener(new LoadClassMenuHandler(loadMenuClasses[i]));
+                timesMenuClasses[i].addActionListener(new LoadTimesMenuHandler(timesMenuClasses[i]));
+                docentWindow.loadClassMenu.add(loadMenuClasses[i]);
+                docentWindow.loadTimesMenu.add(timesMenuClasses[i]);
                 i++;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-    class ClassChooser implements ActionListener {
+    
+    class LoadClassMenuHandler implements ActionListener {
 
         JMenuItem menuItem;
 
-        public ClassChooser(JMenuItem menuItem) {
+        public LoadClassMenuHandler(JMenuItem menuItem) {
             this.menuItem = menuItem;
         }
 
@@ -84,36 +90,66 @@ public class DocentMember {
         public void actionPerformed(ActionEvent e) {
 
             /*
-             * Selects all students from the student table and checks their foreign keys
-             * (class_name) whether they're not null and equal to the selected jMenuItem.
-             * We only want to select students from the class we have chosen in the menu.
-             * If all conditions are met, an object array is created where data from all 
-             * the corresponding foreign key rows is stored and added to the table.
+             * Selects students from a class based on user selection in the menu.
+             * If the user for example selects class "7A" then students which have
+             * class 7A as their foreign key will be loaded from the DB and added
+             * to the table in the window.
              */
             if (e.getSource() == menuItem) {
-                String query = "SELECT * FROM student";
-                window.getTableModel().setRowCount(0); // remove rows in the table if there are any
-                window.setTitle(window.getTitle() + " groep " + menuItem.getText()); // set the class name as title of the windows
+                String query = "SELECT * FROM student WHERE class_name = '" + menuItem.getText() + "';";
+                docentWindow.getTableModel().setRowCount(0); // remove rows in the table if there are any
+                docentWindow.setTitle("");
+                docentWindow.setTitle(docentWindow.getTitle() + " groep " + menuItem.getText()); // set the class name as title of the windows
 
                 try {
                     ResultSet rs = statement.executeQuery(query);
                     while (rs.next()) {
-                        String className = rs.getString("class_name"); // store the foreign keys in className
-                        if (className != null) {
-                            if (className.equals(menuItem.getText())) {
-                                
-                                // object array where the row/s is/are stored in
-                                Object[] data = {rs.getInt("id"), rs.getString("first_name"),
-                                    rs.getString("surname"), rs.getDate("birthdate"), rs.getString("gender"),
-                                    rs.getDouble("weight"), rs.getInt("length"), rs.getDouble("bmi")
-                                };
-                                
-                                window.getTableModel().addRow(data); // add everything to the table
+                        Object[] data = {rs.getInt("id"), rs.getString("first_name"),
+                            rs.getString("surname"), rs.getDate("birthdate"), rs.getString("gender"),
+                            rs.getDouble("weight"), rs.getInt("length"), rs.getDouble("bmi")
+                        };
+                        docentWindow.getTableModel().addRow(data); // add everything to the table
+                    }
 
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Column not available.", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
+    class LoadTimesMenuHandler implements ActionListener {
+
+        JMenuItem menuItem;
+
+        public LoadTimesMenuHandler(JMenuItem menuItem) {
+            this.menuItem = menuItem;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            /*
+             * Selects students from a class based on user selection in the menu.
+             * Id's and times from the student_tijd table are selected and only
+             * students from the selected class are subselected. So if user picks class
+             * "7A" from the menu then the table will be filled with ids and times from class "7A".
+             * 
+             */
+            if (e.getSource() == menuItem) {
+                timesWindow = new TimeTrack();
+                timesWindow.setLocationRelativeTo(docentWindow);
+
+                String query = "SELECT * FROM student_tijd WHERE id IN (SELECT id FROM student WHERE class_name = '" + menuItem.getText() + "');";
+                timesWindow.getTableModel().setRowCount(0); // remove rows in the table if there are any
+                timesWindow.setTitle("");
+                timesWindow.setTitle(timesWindow.getTitle() + " groep " + menuItem.getText()); // set the class name as title of the windows
+
+                try {
+                    ResultSet rs = statement.executeQuery(query);
+                    while (rs.next()) {
+                        Object[] data = {rs.getInt("id"), rs.getInt("time")};
+                        timesWindow.getTableModel().addRow(data); // add everything to the table
                     }
 
                 } catch (SQLException ex) {
