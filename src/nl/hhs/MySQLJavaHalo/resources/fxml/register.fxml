@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="46.0" layoutY="68.0" text="Gebruikersnaam:" />
+      <JFXTextField focusColor="#a7b232" layoutX="38.0" layoutY="93.0" maxWidth="525.0" minWidth="525.0" prefHeight="33.0" prefWidth="525.0" promptText="Uw gebruikersnaam..." unFocusColor="#c9ce86" />
+      <Label layoutX="46.0" layoutY="142.0" text="Wachtwoord:" />
+      <JFXPasswordField focusColor="#a7b232" layoutX="38.0" layoutY="167.0" maxWidth="525.0" minWidth="525.0" prefHeight="33.0" prefWidth="525.0" promptText="Uw wachtwoord..." unFocusColor="#c9ce86" />
+      <JFXButton alignment="BASELINE_RIGHT" layoutX="437.0" layoutY="295.0" prefHeight="27.0" prefWidth="119.0" ripplerFill="#a7b232" text="Registreren" />
+      <JFXPasswordField focusColor="#a7b232" layoutX="38.0" layoutY="239.0" maxWidth="525.0" minWidth="525.0" prefHeight="33.0" prefWidth="525.0" promptText="Uw wachtwoord..." unFocusColor="#c9ce86" />
+      <Label layoutX="46.0" layoutY="214.0" text="Herhaal wachtwoord:" />
+   </children>
+</Pane>
