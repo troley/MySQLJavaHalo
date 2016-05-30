@@ -85,7 +85,6 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
         jMenuBar1.add(schoolMenu);
 
         loadClassMenu.setText("Load class");
-        loadClassMenu.setOpaque(true);
         jMenuBar1.add(loadClassMenu);
 
         setJMenuBar(jMenuBar1);
