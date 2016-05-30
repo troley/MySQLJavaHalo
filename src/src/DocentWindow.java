@@ -5,13 +5,14 @@
  */
 package src;
 
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Troley
  */
-public class DocentWindow extends javax.swing.JFrame {
+public class DocentWindow extends JFrame {
 
     DefaultTableModel dtm;
     /*
@@ -63,32 +64,38 @@ public class DocentWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        tableScrollPane = new javax.swing.JScrollPane();
         dbTable = new javax.swing.JTable();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        editMenu = new javax.swing.JMenu();
-        classMenu = new javax.swing.JMenu();
+        menuBar = new javax.swing.JMenuBar();
+        loadClassMenu = new javax.swing.JMenu();
+        loadTimesMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Docent");
 
         dbTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(dbTable);
+        tableScrollPane.setViewportView(dbTable);
+        if (dbTable.getColumnModel().getColumnCount() > 0) {
+            dbTable.getColumnModel().getColumn(0).setHeaderValue("Student_id");
+            dbTable.getColumnModel().getColumn(1).setHeaderValue("First name");
+            dbTable.getColumnModel().getColumn(2).setHeaderValue("Last name");
+            dbTable.getColumnModel().getColumn(3).setHeaderValue("Birthdate");
+            dbTable.getColumnModel().getColumn(4).setHeaderValue("Gender");
+            dbTable.getColumnModel().getColumn(5).setHeaderValue("Weight");
+            dbTable.getColumnModel().getColumn(6).setHeaderValue("Length");
+            dbTable.getColumnModel().getColumn(7).setHeaderValue("BMI");
+        }
 
-        jMenuBar1.setAlignmentY(0.4761905F);
-        jMenuBar1.setPreferredSize(new java.awt.Dimension(139, 30));
+        menuBar.setAlignmentY(0.4761905F);
+        menuBar.setPreferredSize(new java.awt.Dimension(139, 30));
 
-        fileMenu.setText("File");
-        jMenuBar1.add(fileMenu);
+        loadClassMenu.setText("Load class");
+        menuBar.add(loadClassMenu);
 
-        editMenu.setText("Edit");
-        jMenuBar1.add(editMenu);
+        loadTimesMenu.setText("Load times");
+        menuBar.add(loadTimesMenu);
 
-        classMenu.setText("Load class");
-        jMenuBar1.add(classMenu);
-
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,25 +103,26 @@ public class DocentWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1098, Short.MAX_VALUE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1293, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    javax.swing.JMenu classMenu;
     javax.swing.JTable dbTable;
-    javax.swing.JMenu editMenu;
-    javax.swing.JMenu fileMenu;
-    javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
+    javax.swing.JMenu loadClassMenu;
+    javax.swing.JMenu loadTimesMenu;
+    javax.swing.JMenuBar menuBar;
+    private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
 }

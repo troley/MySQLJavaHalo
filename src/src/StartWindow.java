@@ -7,6 +7,8 @@ package src;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -22,8 +24,22 @@ public class StartWindow extends javax.swing.JFrame implements ActionListener {
         setLocationRelativeTo(null);
         loginButton.addActionListener(this);
         registerButton.addActionListener(this);
+        
+        addKeyListener(new FocusedComponentClick());
+        loginButton.addKeyListener(new FocusedComponentClick());
+        registerButton.addKeyListener(new FocusedComponentClick());
     }
 
+    class FocusedComponentClick extends KeyAdapter {
+        public void keyPressed(KeyEvent e) {
+            if(e.getSource() == registerButton) {
+                registerButton.doClick();
+            } else {
+                loginButton.doClick();
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
