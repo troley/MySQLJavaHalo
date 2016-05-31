@@ -91,13 +91,6 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
         });
         dbTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(dbTable);
-        if (dbTable.getColumnModel().getColumnCount() > 0) {
-            dbTable.getColumnModel().getColumn(0).setHeaderValue("Score");
-            dbTable.getColumnModel().getColumn(1).setHeaderValue("Date");
-            dbTable.getColumnModel().getColumn(2).setHeaderValue("Teacher");
-            dbTable.getColumnModel().getColumn(3).setHeaderValue("Gender student");
-            dbTable.getColumnModel().getColumn(4).setHeaderValue("BMI student");
-        }
 
         jMenuBar1.setAlignmentY(0.4761905F);
         jMenuBar1.setPreferredSize(new java.awt.Dimension(139, 30));
@@ -172,7 +165,7 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable dbTable;
+    javax.swing.JTable dbTable;
     javax.swing.JMenu editMenu;
     javax.swing.JMenu fileMenu;
     private javax.swing.JEditorPane jEditorPane1;

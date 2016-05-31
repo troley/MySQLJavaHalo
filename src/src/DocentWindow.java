@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Troley
  */
 public class DocentWindow extends JFrame {
-
+    
     DefaultTableModel dtm;
     /*
      * Create the JFrame and its components 
@@ -25,7 +25,17 @@ public class DocentWindow extends JFrame {
     }
 
     private void dbTableModel() {
-        dtm = new DefaultTableModel();
+        dtm = new DefaultTableModel() {
+            boolean[] canEdit = new boolean[] {
+                false, false, false, false, false, false, false, false
+            };
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return canEdit[column];
+            } 
+        };
+        
         String header[] = {"Student_id", "First name", "Last name", "Birthdate", "Gender", "Weight", "Length", "BMI"};
         dtm.setColumnIdentifiers(header);
         dbTable.setModel(dtm);
@@ -54,7 +64,7 @@ public class DocentWindow extends JFrame {
             java.util.logging.Logger.getLogger(DocentWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,8 +77,10 @@ public class DocentWindow extends JFrame {
         tableScrollPane = new javax.swing.JScrollPane();
         dbTable = new javax.swing.JTable();
         menuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
         loadClassMenu = new javax.swing.JMenu();
         loadTimesMenu = new javax.swing.JMenu();
+        exitItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Docent");
@@ -89,11 +101,19 @@ public class DocentWindow extends JFrame {
         menuBar.setAlignmentY(0.4761905F);
         menuBar.setPreferredSize(new java.awt.Dimension(139, 30));
 
+        fileMenu.setText("File");
+
         loadClassMenu.setText("Load class");
-        menuBar.add(loadClassMenu);
+        fileMenu.add(loadClassMenu);
 
         loadTimesMenu.setText("Load times");
-        menuBar.add(loadTimesMenu);
+        fileMenu.add(loadTimesMenu);
+
+        exitItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        exitItem.setText("Exit");
+        fileMenu.add(exitItem);
+
+        menuBar.add(fileMenu);
 
         setJMenuBar(menuBar);
 
@@ -120,6 +140,8 @@ public class DocentWindow extends JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JTable dbTable;
+    javax.swing.JMenuItem exitItem;
+    javax.swing.JMenu fileMenu;
     javax.swing.JMenu loadClassMenu;
     javax.swing.JMenu loadTimesMenu;
     javax.swing.JMenuBar menuBar;
