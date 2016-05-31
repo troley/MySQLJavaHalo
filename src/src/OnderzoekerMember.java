@@ -17,6 +17,8 @@ public class OnderzoekerMember {
     String[] menuStrings;
     JMenuItem[] menuClasses;
 
+    String selectedSchool;
+
     
     public OnderzoekerMember() {
         getConnAndStatement();
@@ -82,11 +84,21 @@ public class OnderzoekerMember {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
-            if(!checkIfLoadClassButtonIsVisible()) {
-               setClassNamesInMenuItem();  
+
+            for(int i = 0; i < window.schoolMenu.getItemCount(); i++) {
+                if(window.schoolMenu.getItem(i).getText().equals(e.getActionCommand())) {
+                    selectedSchool = e.getActionCommand();
+
+                    try {
+                        window.loadClassMenu.removeAll();
+                        setClassNamesInMenuItem();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                }
             }
-            else {
+
+            if(checkIfLoadClassButtonIsVisible()) {
                 loadStudents(e);
             }
 
@@ -100,8 +112,8 @@ public class OnderzoekerMember {
             return false;
         }
         
-        public void setClassNamesInMenuItem() {
-            String query = "SELECT class_name FROM class";
+        public void setClassNamesInMenuItem() throws SQLException {
+            String query = "SELECT class_name FROM class WHERE school = '" + selectedSchool + "'";
             try {
                 rs = statement.executeQuery(query);
 
