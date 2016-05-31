@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.naming.spi.NamingManager;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 
@@ -61,6 +62,14 @@ public class DocentMember {
                 i++;
             }
 
+            // exit menuItem ActionListener
+            docentWindow.exitItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.exit(0);
+                }
+            });
+            
             // defining the arrays and setting the strings array as text to the jMenuItems array
             i = 0;
             while (rs.next()) {
@@ -140,7 +149,7 @@ public class DocentMember {
                 timesWindow = new TimeTrack();
                 timesWindow.setLocationRelativeTo(docentWindow);
 
-                String query = "SELECT * FROM student_tijd WHERE id IN (SELECT id FROM student WHERE class_name = '" + menuItem.getText() + "');";
+                String query = "SELECT * FROM student_parcours WHERE id IN (SELECT id FROM student WHERE class_name = '" + menuItem.getText() + "');";
                 timesWindow.getTableModel().setRowCount(0); // remove rows in the table if there are any
                 timesWindow.setTitle("");
                 timesWindow.setTitle(timesWindow.getTitle() + " groep " + menuItem.getText()); // set the class name as title of the windows
@@ -148,10 +157,13 @@ public class DocentMember {
                 try {
                     ResultSet rs = statement.executeQuery(query);
                     while (rs.next()) {
-                        Object[] data = {rs.getInt("id"), rs.getInt("time")};
+                        Object[] data = {rs.getInt("id"), rs.getInt("score_tijd"), rs.getDate("datum"), rs.getString("school"),
+                        rs.getString("docent_naam"), rs.getInt("d_code")};
                         timesWindow.getTableModel().addRow(data); // add everything to the table
                     }
-
+                    timesWindow.setInitialRowCount(timesWindow.dbTimesTable.getRowCount());
+                    timesWindow.setInitialColCount(timesWindow.dbTimesTable.getColumnCount());
+                    
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
