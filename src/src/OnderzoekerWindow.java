@@ -25,7 +25,7 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
     
         private void dbTableModel() {
         dtm = new DefaultTableModel();
-        String header[] = {"Student_id", "First name", "Last name", "Birthdate", "Gender", "Weight", "Length", "BMI"};
+        String header[] = {"Score", "Date", "Teacher", "Gender Student", "BMI Student"};
         dtm.setColumnIdentifiers(header);
         dbTable.setModel(dtm);
     }
@@ -59,6 +59,8 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         dbTable = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -67,10 +69,35 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
         schoolMenu = new javax.swing.JMenu();
         loadClassMenu = new javax.swing.JMenu();
 
+        jScrollPane2.setViewportView(jEditorPane1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        dbTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Score", "Date", "Teacher", "Gender student", "BMI student"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         dbTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(dbTable);
+        if (dbTable.getColumnModel().getColumnCount() > 0) {
+            dbTable.getColumnModel().getColumn(0).setHeaderValue("Score");
+            dbTable.getColumnModel().getColumn(1).setHeaderValue("Date");
+            dbTable.getColumnModel().getColumn(2).setHeaderValue("Teacher");
+            dbTable.getColumnModel().getColumn(3).setHeaderValue("Gender student");
+            dbTable.getColumnModel().getColumn(4).setHeaderValue("BMI student");
+        }
 
         jMenuBar1.setAlignmentY(0.4761905F);
         jMenuBar1.setPreferredSize(new java.awt.Dimension(139, 30));
@@ -145,11 +172,13 @@ public class OnderzoekerWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    javax.swing.JTable dbTable;
+    private javax.swing.JTable dbTable;
     javax.swing.JMenu editMenu;
     javax.swing.JMenu fileMenu;
+    private javax.swing.JEditorPane jEditorPane1;
     javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JMenu loadClassMenu;
     public javax.swing.JMenu schoolMenu;
     // End of variables declaration//GEN-END:variables

@@ -18,6 +18,7 @@ public class OnderzoekerMember {
     JMenuItem[] menuClasses;
 
     String selectedSchool;
+    String selectedClass;
 
     
     public OnderzoekerMember() {
@@ -29,6 +30,9 @@ public class OnderzoekerMember {
         window.loadClassMenu.setVisible(false);
         window.setVisible(true);
     }
+
+
+
     
      private void getConnAndStatement() {
         try {
@@ -84,6 +88,15 @@ public class OnderzoekerMember {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            for(int i = 0; i < window.loadClassMenu.getItemCount(); i++) {
+                if (window.loadClassMenu.getItem(i).getText().equals(e.getActionCommand())) {
+                    selectedClass = e.getActionCommand();
+                }
+            }
+
+            if(checkIfLoadClassButtonIsVisible()) {
+                loadStudents(e);
+            }
 
             for(int i = 0; i < window.schoolMenu.getItemCount(); i++) {
                 if(window.schoolMenu.getItem(i).getText().equals(e.getActionCommand())) {
@@ -98,11 +111,7 @@ public class OnderzoekerMember {
                 }
             }
 
-            if(checkIfLoadClassButtonIsVisible()) {
-                loadStudents(e);
-            }
 
-            
         }
         
         public boolean checkIfLoadClassButtonIsVisible() {
@@ -143,11 +152,13 @@ public class OnderzoekerMember {
                     i++;
                 }
                 window.loadClassMenu.setVisible(true);
+                window.setTitle("School " + selectedSchool); // set the class name as title of the windows
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
-        
+
+
         public void loadStudents(ActionEvent e) {
            /*
              * Selects all students from the student table and checks their foreign keys
@@ -157,9 +168,9 @@ public class OnderzoekerMember {
              * the corresponding foreign key rows is stored and added to the table.
              */
             if (e.getSource() == menuItem) {
-                String query = "SELECT * FROM student";
+                String query = "SELECT SP.score_tijd, SP.datum, SP.docent_naam, S.gender, S.bmi, C.class_name FROM student S JOIN student_parcours SP ON SP.id = S.id JOIN class C ON C.class_name = S.class_name WHERE C.class_name = '" + selectedClass + "'";
                 window.getTableModel().setRowCount(0); // remove rows in the table if there are any
-                window.setTitle(window.getTitle() + " groep " + menuItem.getText()); // set the class name as title of the windows
+                window.setTitle("School " + selectedSchool + " groep " + selectedClass); // set the class name as title of the windows
 
                 try {
                     ResultSet rs = statement.executeQuery(query);
@@ -169,11 +180,10 @@ public class OnderzoekerMember {
                             if (className.equals(menuItem.getText())) {
                                 
                                 // object array where the row/s is/are stored in
-                                Object[] data = {rs.getInt("id"), rs.getString("first_name"),
-                                    rs.getString("surname"), rs.getDate("birthdate"), rs.getString("gender"),
-                                    rs.getDouble("weight"), rs.getInt("length"), rs.getDouble("bmi")
+                                Object[] data = {rs.getInt("score_tijd"), rs.getDate("datum"),
+                                    rs.getString("docent_naam"), rs.getString("gender"), rs.getString("bmi")
                                 };
-                                
+
                                 window.getTableModel().addRow(data); // add everything to the table
 
                             }
@@ -185,9 +195,11 @@ public class OnderzoekerMember {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-            } 
+            }
+
         }
-        
-                   
+
+
+
     }
 }
