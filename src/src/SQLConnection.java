@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class SQLConnection {
 
-    private static final String USERNAME = "halo";
-    private static final String PASSWORD = "8.2Gax5q#";
-    private static final String CONNECTION_STRING = "jdbc:mysql://149.210.228.109/halo";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
+    private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/halo?serverTimezone=CET";
     
     private SQLConnection(){}
 
