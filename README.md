@@ -4,3 +4,5 @@ MySQLJavaHalo is a project made by 4 of my colleague students and me in the firs
 The first part of the application is meant to help teachers test primary school students their health condition by letting the students
 do an agility course and timing each one of them how fast they finish the course. The second part is meant to help researchers 
 get anonymous data from each class for statistical purposes about the health condition of students.
+
+<b>Will soon include a working MySQL dump file with test data, so that the program works after the project has been pulled and the dump file script has been executed.</b>  
